@@ -381,8 +381,10 @@ int stats_sock_parse_request(struct stream_interface *si, char *line)
 			}
 
 			for (px = proxy; px; px = px->next) {
-				if (clrall)
+				if (clrall) {
 					memset(&px->counters, 0, sizeof(px->counters));
+					sv->down_time = 0;
+				}
 				else {
 					px->counters.feconn_max = 0;
 					px->counters.beconn_max = 0;
